@@ -1,152 +1,80 @@
+let searchInput = document.querySelector(".serch-input");
+let btn = document.querySelector(".bt1");
+let API_KEY = "74695a04";
+let loader = document.querySelector(".loaderdiv");
 
-let serchinput=document.querySelector(".serch-input");
-let btn=document.querySelector(".bt1")
-let API_KEY="74695a04"
+const showLoader = () => loader.classList.remove("hide");
+const hideLoader = () => loader.classList.add("hide");
 
+const fetchMovies = async (inputValue) => {
+  let url = `https://www.omdbapi.com/?s=${inputValue}&apikey=${API_KEY}`;
+  let response = await fetch(url);
+  let data = await response.json();
+  return data;
+};
 
-let movies = async(input_vlue)=>{
-    let base_url=`http://www.omdbapi.com/?s=${input_vlue}&apikey=${API_KEY}`
- let response=await fetch(base_url)
- console.log(response)
- let data= await response.json();
+const renderMovies = (data) => {
+  let container = document.querySelector(".serch-results");
+  container.innerHTML = "";
 
+  if (data.Response === "True" && data.Search) {
+    data.Search.forEach((movie, index) => {
+      const poster = movie.Poster !== "N/A" ? movie.Poster : "image/image-not-found.jfif";
+      const uniqueId = `rating-${movie.imdbID}`;
 
-
-
-let div=document.querySelector(".serch-results")
-     div.innerHTML="";
-if(data.Response==="True"&& data.Search){
- 
-    for(let movie of data.Search){
-
-    let details_url=`http://www.omdbapi.com/?i=${movie.imdbID}&apikey=${API_KEY}`;
-    let response=await fetch(details_url)
-    let details=await response.json();
-    console.log(details.imdbRating)
-        console.log(movie.Title);
-        console.log(movie.Poster);
- let posterHtml="";
- if(movie.Poster !=="N/A"){
-    
-
-
-
-        posterHtml =`   <div class="imgofmovie" style="  background-image: 
-    linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), /* Dark overlay */
-    url('${movie.Poster}') ; ">`
- }
- else{
-posterHtml =`   <div class="imgofmovie" style="  background-image: 
-    linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), /* Dark overlay */
-    url('image/image-not-found.jfif'); ">`
-      
-
- }
-
-
-        
-             div.innerHTML+=`  
-              <div class="div1">
-                  
-                  ${posterHtml}
-                  
-              
-                <div class="combine">
-                    <div class="rating">
-                        <p>${details.imdbRating}</p>
-                    </div>
-
-                    <div class="type">
-                        <p>${movie.Type}</p>
-                    </div>
-                </div>
+      container.innerHTML += `
+        <div class="div1">
+          <div class="imgofmovie">
+            <img src="${poster}" alt="${movie.Title}" loading="lazy">
+          </div>
+          <div class="combine">
+            <div class="rating" id="${uniqueId}">
+              <p>Loading...</p>
             </div>
-            <div class="actor">
-                <h3>${movie.Title}</h3>
+            <div class="type">
+              <p>${movie.Type}</p>
             </div>
-        </div> 
-             
-             `;
+          </div>
+          <div class="actor">
+            <h3>${movie.Title}</h3>
+          </div>
+        </div>
+      `;
 
-
-
-
-             
-
-
-    }
-}
-else{
-  div.innerHTML =`<h1 style="color:white;">Movie not found</h1>`
-}
-
-
-
-
-}
-
-
-    let loaddiv=document.querySelector(".loaderdiv");
-
-     let loadshow=()=>{
-        loaddiv.classList.remove("hide")
-     }
-     let loadhide=()=>{
-        loaddiv.classList.add("hide")
-     }
-
-let handle= async()=>{
-
-let input_vlue=serchinput.value.trim();
-
-if(input_vlue.length >=2){
-    
-    loadshow();
-    await movies(input_vlue)
-    
-    loadhide();
-  
-}
-
-}
-
-
-btn.addEventListener("click",()=>{
-    handle();
-})
-
-
-serchinput.addEventListener("keydown",(e)=>{
-    if(e.key==="Enter"){
-        handle();
-    }
-
-
-})
-
-
-           
-document.querySelector(".serch-results").addEventListener("mouseover", (e) => {
-    let card = e.target.closest(".div1");
-    if (card) {
-        let img = card.querySelector(".imgofmovie");
-        if (img && img.style) {
-            
-            if (!img.dataset.originalBg) {
-                img.dataset.originalBg = img.style.backgroundImage;
+      // Delay fetching ratings using setTimeout
+      setTimeout(() => {
+        fetch(`https://www.omdbapi.com/?i=${movie.imdbID}&apikey=${API_KEY}`)
+          .then((res) => res.json())
+          .then((details) => {
+            const ratingEl = document.getElementById(uniqueId);
+            if (ratingEl) {
+              ratingEl.innerHTML = `<p>${details.imdbRating || "N/A"}</p>`;
             }
-            let currentBg = img.style.backgroundImage;
-            img.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0)), ${currentBg.replace(/linear-gradient\(.*\),\s*/, '')}`;
-        }
-    }
+          });
+      }, index * 300); // each fetch delayed by 300ms per card
+    });
+  } else {
+    container.innerHTML = `<h1 style="color:white;">Movie not found</h1>`;
+  }
+};
+
+const handleSearch = async () => {
+  let value = searchInput.value.trim();
+  if (value.length >= 2) {
+    showLoader();
+    const data = await fetchMovies(value);
+    renderMovies(data);
+    hideLoader();
+  }
+};
+
+// Debounce input
+let debounceTimeout;
+searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => handleSearch(), 300);
+  }
 });
 
-document.querySelector(".serch-results").addEventListener("mouseout", (e) => {
-    let card = e.target.closest(".div1");
-    if (card) {
-        let img = card.querySelector(".imgofmovie");
-        if (img && img.style && img.dataset.originalBg) {
-            img.style.backgroundImage = img.dataset.originalBg;
-        }
-    }
-});
+btn.addEventListener("click", handleSearch);
