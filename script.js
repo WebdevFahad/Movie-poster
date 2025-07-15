@@ -33,12 +33,12 @@ if(data.Response==="True"&& data.Search){
 
         posterHtml =`   <div class="imgofmovie" style="  background-image: 
     linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), /* Dark overlay */
-    url('${movie.Poster}');">`
+    url('${movie.Poster}') ; ">`
  }
  else{
 posterHtml =`   <div class="imgofmovie" style="  background-image: 
     linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), /* Dark overlay */
-    url('image/image-not-found.jfif');">`
+    url('image/image-not-found.jfif'); ">`
       
 
  }
