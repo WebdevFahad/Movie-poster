@@ -19,6 +19,19 @@ const renderMovies = (data) => {
 
   if (data.Response === "True" && data.Search) {
     data.Search.forEach((movie, index) => {
+
+
+
+
+
+
+
+
+
+
+
+
+
       const poster = movie.Poster !== "N/A" ? movie.Poster : "image/image-not-found.jfif";
       const uniqueId = `rating-${movie.imdbID}`;
 

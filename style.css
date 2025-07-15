@@ -84,7 +84,7 @@ text-decoration: none;
         
           gap: 2rem;
 }
-.imgofmovie {
+/* .imgofmovie {
  
     background-size: contain;
            background-position:center;
@@ -92,17 +92,36 @@ text-decoration: none;
     height: 100%;
     border-radius: 2rem;
     width: 100%;
-    align-items: center;
-justify-content: center;
-display: flex;
 
     
+} */
+
+
+
+
+
+.imgofmovie {
+  height: 400px;
+  width: 100%;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.imgofmovie img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 2rem;
+
 }
 .combine {
             display: flex;
             width: 100%;
             justify-content: space-around;
-            height: 100%;
+         
             align-items: end;
         }
         
@@ -314,6 +333,7 @@ pointer-events: none;
     height: 100%;
     border-radius: 2rem;
     width: 100%;
+ 
 
     
 }
@@ -321,7 +341,7 @@ pointer-events: none;
             display: flex;
             width: 100%;
             justify-content: space-around;
-            height: 100%;
+   
             align-items: end;
         }
 .bt1{
@@ -386,7 +406,7 @@ letter-spacing: 0.1rem;
             display: flex;
             width: 100%;
             justify-content: space-around;
-            height: 100%;
+        
             align-items: end;
         }
 
@@ -445,7 +465,7 @@ letter-spacing: 0.1rem;
             display: flex;
             width: 100%;
             justify-content: space-around;
-            height: 100%;
+ 
             align-items: end;
         }
         
