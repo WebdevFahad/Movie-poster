@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="image/logo-movie-poster.jfif" type="image/x-icon">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        .serch-results {
+
+            display: grid;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            align-items: center;
+            justify-content: center;
+          
+            gap: 2rem;
+        }
+
+        .imgofmovie {
+
+            background-size: contain;
+           background-position:center;
+           background-repeat: no-repeat;
+            height: 100%;
+            border-radius: 2rem;
+            width: 100%;
+
+        }
+
+        .div1 {
+
+
+            align-items: center;
+            padding: 1rem;
+            height: 600px;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+
+
+        }
+
+        .combine {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            height: 100%;
+            align-items: end;
+        }
+
+        .rating {
+            font-size: 2rem;
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+
+        }
+
+        .type {
+            font-size: 2rem;
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+              text-shadow:
+  1px 1px 2px rgba(255, 230, 8, 0.8),
+  2px 2px 4px rgba(0, 0, 0, 10);
+        }
+
+        .actor {
+            align-items: center;
+            width: 100%;
+            text-align: center;
+            font-size: 2rem;
+            color: white;
+             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .but{
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .but a{
+            text-decoration: none;
+
+        }
+         .but button{
+            padding: 1rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            background-color:rgba(247, 247, 247, 0.171) ;
+color: rgb(255, 255, 255);
+            border: none;
+            transition: transform  0.5s;
+            font-weight: bolder;
+            text-shadow: 1px  1px 2px #f80808;
+         }
+         .but button:hover{
+            transform: translateY(-5px);
+          
+        
+            cursor: pointer;
+             color: rgb(255, 252, 252);
+            
+         }
+                  .loader {
+  width: 40px;
+  aspect-ratio: 1;
+  --c: linear-gradient(#fa0e0e 0 0);
+  --r1: radial-gradient(farthest-side at bottom,#ec0909 93%,#f80808);
+  --r2: radial-gradient(farthest-side at top   ,#c21515 93%,#df250c);
+  background: 
+    var(--c) ,var(--r1),var(--r2),
+    var(--c) ,var(--r1),var(--r2),
+    var(--c) ,var(--r1),var(--r2);
+  background-repeat: no-repeat;
+  animation: l2 1s infinite alternate;
+}
+@keyframes l2 {
+  0%,25% {
+    background-size: 8px 0,8px 4px,8px 4px,8px 0,8px 4px,8px 4px,8px 0,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(50% - 2px),0 calc(50% + 2px),50% 50%,50% calc(50% - 2px),50% calc(50% + 2px),100% 50%,100% calc(50% - 2px),100% calc(50% + 2px);
+ }
+ 50% {
+    background-size: 8px 100%,8px 4px,8px 4px,8px 0,8px 4px,8px 4px,8px 0,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(0% - 2px),0 calc(100% + 2px),50% 50%,50% calc(50% - 2px),50% calc(50% + 2px),100% 50%,100% calc(50% - 2px),100% calc(50% + 2px);
+ }
+ 75% {
+    background-size: 8px 100%,8px 4px,8px 4px,8px 100%,8px 4px,8px 4px,8px 0,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(0% - 2px),0 calc(100% + 2px),50% 50%,50% calc(0% - 2px),50% calc(100% + 2px),100% 50%,100% calc(50% - 2px),100% calc(50% + 2px);
+ }
+ 95%,100% {
+    background-size: 8px 100%,8px 4px, 8px 4px,8px 100%,8px 4px,8px 4px,8px 100%,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(0% - 2px),0 calc(100% + 2px),50% 50%,50% calc(0% - 2px),50% calc(100% + 2px),100% 50%,100% calc(0% - 2px),100% calc(100% + 2px);
+ }
+}
+.loadonwindow{
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: fixed;
+    z-index: 13000;
+    background-color:black;
+    pointer-events: all;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+.loadonwindow.hide{
+    pointer-events: none;
+    opacity: 0;
+}
+    </style>
+</head>
+
+<body>
+         <div class="loadonwindow">
+     <div class="loader"></div> 
+</div>
+    <div class="serch-results">
+
+      
+
+    </div>
+
+    <div class="but" >
+       <a href="movie.html"> <button>Back to Main</button></a>
+    </div>
+
+
+</body>
+<script>
+    
+    let API_KEY = "74695a04"
+    let base_url = `http://www.omdbapi.com/?s=harry&apikey=${API_KEY}`
+    let movies = async () => {
+        let respone = await fetch(base_url)
+        let data = await respone.json();
+
+
+        let div = document.querySelector(".serch-results")
+        div.innerHTML = "";
+        if (data.Response === "True" && data.Search) {
+
+
+
+
+            for (let movie of data.Search) {
+                let details_url = `http://www.omdbapi.com/?i=${movie.imdbID}&apikey=${API_KEY}`;
+                let response = await fetch(details_url)
+                let details = await response.json();
+                console.log(movie.Poster)
+                div.innerHTML += `
+              <div class="div1">
+                  
+                    <div class="imgofmovie" style="  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), /* Dark overlay */
+    url('${movie.Poster}');">
+                  
+              
+                <div class="combine">
+                    <div class="rating">
+                        <p>${details.imdbRating}</p>
+                    </div>
+
+                    <div class="type">
+                        <p>${movie.Type}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="actor">
+                <h3>${movie.Title}</h3>
+            </div>
+        </div> 
+
+          
+          
+          `
+
+            }
+        }
+        
+    }
+      window.addEventListener("load",async()=>{
+        let loadonwindow=document.querySelector(".loadonwindow")
+
+                await  movies();
+      
+            loadonwindow.classList.add("hide")
+        
+    })
+ 
+
+    document.querySelector(".serch-results").addEventListener("mouseover", (e) => {
+    let card = e.target.closest(".div1");
+    if (card) {
+        let img = card.querySelector(".imgofmovie");
+        if (img && img.style) {
+            
+            if (!img.dataset.originalBg) {
+                img.dataset.originalBg = img.style.backgroundImage;
+            }
+            let currentBg = img.style.backgroundImage;
+            img.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), ${currentBg.replace(/linear-gradient\(.*\),\s*/, '')}`;
+        }
+    }
+});
+
+document.querySelector(".serch-results").addEventListener("mouseout", (e) => {
+    let card = e.target.closest(".div1");
+    if (card) {
+        let img = card.querySelector(".imgofmovie");
+        if (img && img.style && img.dataset.originalBg) {
+            img.style.backgroundImage = img.dataset.originalBg;
+        }
+    }
+});
+
+
+</script>
+
+</html>
